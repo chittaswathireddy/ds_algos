@@ -5,7 +5,57 @@ class Node:
         self.right = right
 
 
+class GenNode:
+    def __init__(self, data, child=[]):
+        self.data = data
+        self.child = child
+
+
+
+
 class Tree:
+    """      A
+        B  C  D  E
+      F,G  H I,J  K,L,M
+    """
+    def create_tree(self):
+        return GenNode('A',
+                       [GenNode('B', [GenNode('F'), GenNode('G')]),
+                        GenNode('C', [GenNode('H')]),
+                        GenNode('D', [GenNode('I'), GenNode('J')]),
+                        GenNode('E', [GenNode('K'), GenNode('L'), GenNode('M')])]
+                       )
+    def level_order_traversal(self):
+        return
+    def pre_order_traversal(self, root):
+        #  FBG A
+        if root == None: return
+        print(root.data)
+        for i in root.child:
+            self.pre_order_traversal(i)
+    def inorder(self, node):
+        # Parent before second last child
+        if node == None: return
+        for i in node.child[:-1]:
+            self.inorder(i)
+        print(node.data)
+        if node.child: self.inorder(node.child[-1])
+
+
+
+
+    def post_trs(self, root):
+        def post_order_traversal(root):
+            if root == None: return
+            for i in root.child:
+                post_order_traversal(i)
+                print(i.data)
+
+        post_order_traversal(root)
+        print(root.data)
+
+
+class BinaryTree:
     """
                 A
              B       C
@@ -51,14 +101,28 @@ class Tree:
 
 
 
+tree1 = BinaryTree()
 tree = Tree()
 x = tree.create_tree()
-print('in-order traversal')
-tree.in_order_traversal(x)
-print('\n pre-order traversal')
-tree.pre_order_traversal(x)
-print('\n post-order traversal')
-tree.post_order_traversal(x)
+y = tree1.create_tree()
 
-print('\n level order traversal')
-tree.level_order_traversel(x)
+print('in-order traversal')
+tree.inorder(x)
+
+print('in-order traversal')
+tree1.in_order_traversal(y)
+
+# print('\n pre-order traversal')
+# tree.pre_order_traversal(x)
+#
+# print('\n pre-order traversal1')
+# tree1.pre_order_traversal(y)
+
+# print('\n post-order traversal')
+# tree.post_trs(x)
+#
+# print('\n post-order traversal')
+# tree1.post_order_traversal(y)
+#
+# print('\n level order traversal')
+# tree.level_order_traversel(x)
