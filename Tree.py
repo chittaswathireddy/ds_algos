@@ -25,24 +25,36 @@ class Tree:
                         GenNode('D', [GenNode('I'), GenNode('J')]),
                         GenNode('E', [GenNode('K'), GenNode('L'), GenNode('M')])]
                        )
-    def level_order_traversal(self):
-        return
+    def level_order_traversal(self, root):
+        if root is None: return
+        x = [root]
+        while x:
+            node = x.pop(0)
+            print(node.data)
+            if node.child: x += node.child
+
     def pre_order_traversal(self, root):
         #  FBG A
         if root == None: return
         print(root.data)
         for i in root.child:
             self.pre_order_traversal(i)
-    def inorder(self, node):
+    def inorder_firstparent(self, node):
+
         # Parent before second last child
         if node == None: return
         for i in node.child[:-1]:
-            self.inorder(i)
-        print(node.data)
-        if node.child: self.inorder(node.child[-1])
+            self.inorder_firstparent(i)
+        print(node.data, end=', ')
+        if node.child: self.inorder_firstparent(node.child[-1])
 
+    def inorder_lastparent(self, node):
 
-
+        # Parent after first child
+        if node == None: return
+        if node.child: self.inorder_lastparent(node.child[0])
+        print(node.data, end=', ')
+        for i in node.child[1:]: self.inorder_lastparent(i)
 
     def post_trs(self, root):
         def post_order_traversal(root):
@@ -53,6 +65,7 @@ class Tree:
 
         post_order_traversal(root)
         print(root.data)
+
 
 
 class BinaryTree:
@@ -106,11 +119,11 @@ tree = Tree()
 x = tree.create_tree()
 y = tree1.create_tree()
 
-print('in-order traversal')
-tree.inorder(x)
-
-print('in-order traversal')
-tree1.in_order_traversal(y)
+# print('in-order traversal')
+# tree.inorder_firstparent(x)
+#
+# print('in-order traversal')
+# tree1.in_order_traversal(y)
 
 # print('\n pre-order traversal')
 # tree.pre_order_traversal(x)
@@ -124,5 +137,5 @@ tree1.in_order_traversal(y)
 # print('\n post-order traversal')
 # tree1.post_order_traversal(y)
 #
-# print('\n level order traversal')
-# tree.level_order_traversel(x)
+print('\n level order traversal')
+tree.level_order_traversal(x)
